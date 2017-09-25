@@ -1,6 +1,5 @@
 package org.ksusha.controllers;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.simple.JSONObject;
 import org.ksusha.entities.User;
 import org.ksusha.entities.User_Info;
@@ -12,11 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.invoke.empty.Empty;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Controller
@@ -40,8 +35,9 @@ public class UserController {
 
     @GetMapping(path = "/find/id/{id}")
     @ResponseBody
-    public User_Info getUser(@PathVariable Long id) throws NotFoundException {
-        return user_infoService.getById(id);
+    public JSONObject getUser(@PathVariable Long id) throws NotFoundException {
+        User user = userService.getUserById(id);
+        return fillUserIntoIntoJSON(user);
     }
 
     @GetMapping(path = "/find/login/{login}", produces = "application/json")
@@ -51,14 +47,7 @@ public class UserController {
         if (user == null) {
             user = userService.getUserByLoginLike(login);
         }
-        JSONObject retVal = new JSONObject();
-        retVal.put("name", user.getUser_info().getName());
-        retVal.put("age", user.getUser_info().getAge());
-        retVal.put("secName", user.getUser_info().getSecName());
-        retVal.put("login", user.getLogin());
-        retVal.put("password", user.getPassword());
-        retVal.put("roles", user.getRoles());
-        return retVal;
+        return fillUserIntoIntoJSON(user);
     }
 
     @GetMapping(path = "/find/age/{age}")
@@ -100,14 +89,16 @@ public class UserController {
 
     @PostMapping(path = "/update/")
     @ResponseBody
-    public void updateUser(@RequestBody User_Info user) throws NotFoundException {
+    public String updateUser(@RequestBody User_Info user) throws NotFoundException {
         user_infoService.updateUser(user);
+        return "OK";
     }
 
     @PostMapping(path = "/create/")
     @ResponseBody
-    public void createUser(@RequestBody User_Info user) throws NotFoundException {
+    public String createUser(@RequestBody User_Info user) throws NotFoundException {
         user_infoService.createUser(user);
+        return "OK";
     }
 
     @GetMapping(path = "/delete/id/{id}")
@@ -116,4 +107,15 @@ public class UserController {
         user_infoService.deleteUser(id);
     }
 
+
+    public static JSONObject fillUserIntoIntoJSON(User user) {
+        JSONObject retVal = new JSONObject();
+        retVal.put("name", user.getUser_info().getName());
+        retVal.put("age", user.getUser_info().getAge());
+        retVal.put("secName", user.getUser_info().getSecName());
+        retVal.put("login", user.getLogin());
+        retVal.put("password", user.getPassword());
+        retVal.put("roles", user.getRoles());
+        return retVal;
+    }
 }

@@ -9,5 +9,7 @@ public interface UserService {
     User getUserByLogin(String login);
 
     User getUserByLoginLike(String login);
+
+    User getUserById(Long id);
 }
 

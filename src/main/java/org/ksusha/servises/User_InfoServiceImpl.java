@@ -38,11 +38,6 @@ public class User_InfoServiceImpl implements User_InfoService {
     }
 
     @Override
-    public User_Info getById(Long id) {
-        return user_infoRepository.findOne(id);
-    }
-
-    @Override
     public void createUser(User_Info user) {
         user_infoRepository.save(user);
     }

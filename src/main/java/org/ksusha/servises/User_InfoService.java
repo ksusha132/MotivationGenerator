@@ -20,8 +20,6 @@ public interface User_InfoService {
 
     List<User_Info> getAll();
 
-    User_Info getById(Long id);
-
     void createUser(User_Info user);
 
     void updateUser(User_Info user);
