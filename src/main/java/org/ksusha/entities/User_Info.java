@@ -1,31 +1,24 @@
-package hello.entities;
+package org.ksusha.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class User implements Serializable {
+@Table(name = "user_info")
+public class User_Info implements Serializable {
 
-    public User() {
+    public User_Info() {
 
     }
 
-    public User(String name, String secName, Integer age, String photo) {
+    public User_Info(String name, String secName, Integer age, String photo) {
         this.name = name;
         this.secName = secName;
         this.age = age;
         this.photo = photo;
     }
 
-    public User(String name, String secName, Integer age, String photo, Login login, Set<User_Role> userRoles) {
-        this.name = name;
-        this.secName = secName;
-        this.age = age;
-        this.photo = photo;
-        this.login = login;
-        this.userRoles = userRoles;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,16 +36,6 @@ public class User implements Serializable {
     @Column(name = "photo")
     private String photo;
 
-    //
-
-    @OneToOne
-    @JoinColumn(name = "login_id", referencedColumnName = "id")
-    private Login login;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<User_Role> userRoles;
-
-    //
 
     public Long getId() {
         return id;
@@ -94,36 +77,19 @@ public class User implements Serializable {
         this.photo = photo;
     }
 
-    public Login getLogin() {
-        return login;
-    }
-
-    public void setLogin(Login login) {
-        this.login = login;
-    }
-
-    public Set<User_Role> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<User_Role> userRoles) {
-        this.userRoles = userRoles;
-    }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "User_Info{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", secName='" + secName + '\'' +
                 ", age=" + age +
                 ", photo='" + photo + '\'' +
-                ", login=" + login +
-                ", userRoles=" + userRoles +
                 '}';
     }
 
-    public static int compareByNameThenSecName(User lhs, User rhs) {
+    public static int compareByNameThenSecName(User_Info lhs, User_Info rhs) {
         if (lhs.name.equals(rhs.name)) {
             return lhs.secName.compareTo(rhs.secName);
         } else {
@@ -131,7 +97,7 @@ public class User implements Serializable {
         }
     }
 
-    public static int compareByAgeThenName(User lhs, User rhs) {
+    public static int compareByAgeThenName(User_Info lhs, User_Info rhs) {
         if (lhs.age == rhs.age) {
             return lhs.name.compareTo(rhs.name);
         } else {
@@ -139,7 +105,7 @@ public class User implements Serializable {
         }
     }
 
-    public static int compareBySecNameThenName(User lhs, User rhs) {
+    public static int compareBySecNameThenName(User_Info lhs, User_Info rhs) {
         if (lhs.secName.equals(rhs.secName)) {
             return lhs.name.compareTo(rhs.name);
         } else {

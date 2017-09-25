@@ -1,4 +1,4 @@
-package hello.entities;
+package org.ksusha.entities;
 
 
 import javax.persistence.*;
@@ -53,4 +53,8 @@ public class Role implements Serializable{
         this.userRoles = userRoles;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

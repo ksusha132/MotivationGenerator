@@ -1,13 +1,13 @@
-package hello.entities;
+package org.ksusha.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "user_role")
-public class User_Role implements Serializable{
+public class User_Role implements Serializable {
 
-    public User_Role(){
+    public User_Role() {
 
     }
 
@@ -15,6 +15,7 @@ public class User_Role implements Serializable{
         this.user = user;
         this.role = role;
     }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,6 +30,14 @@ public class User_Role implements Serializable{
     @ManyToOne()
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
