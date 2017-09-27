@@ -20,11 +20,15 @@ public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    private User_InfoService user_infoService;
+    private final User_InfoService user_infoService;
+
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserController(User_InfoService user_infoService, UserService userService) {
+        this.user_infoService = user_infoService;
+        this.userService = userService;
+    }
 
 
     @GetMapping(path = "/find/all")
