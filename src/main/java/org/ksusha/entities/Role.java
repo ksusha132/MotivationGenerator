@@ -23,7 +23,7 @@ public class Role implements Serializable{
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 10)
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 15)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.ALL)

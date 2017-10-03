@@ -28,7 +28,4 @@ public interface User_InfoRepository extends JpaRepository<User_Info, Long> {
     @Query("Select u from User_Info u where u.age > :age1 and u.age < :age2")
     List<User_Info> findByAgeWithParameters(@Param("age1") Integer age1,
                                       @Param("age2") Integer age2);
-
-    // with role
-
 }

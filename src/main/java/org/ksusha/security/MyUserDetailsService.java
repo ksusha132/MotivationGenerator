@@ -31,7 +31,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(final String username)
+    public UserDetails loadUserByUsername(final String username) // but we're load by login
             throws UsernameNotFoundException {
 
         org.ksusha.entities.User user = userRepository.findByLogin(username);
@@ -39,15 +39,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return buildUserForAuthentication(user, authorities);
 
-    }
-
-
-    private User buildUserForAuthentication(org.ksusha.entities.User user,
-                                            List<GrantedAuthority> authorities) {
-        return new User(user.getLogin(), user.getPassword(),
-                true, true,
-                true, true, authorities);
-        // todo later add enable
     }
 
     private List<GrantedAuthority> buildUserAuthority(List<String> userRoles) {
@@ -62,4 +53,11 @@ public class MyUserDetailsService implements UserDetailsService {
         return new ArrayList<GrantedAuthority>(grantedAuthorities);
     }
 
+    private User buildUserForAuthentication(org.ksusha.entities.User user,
+                                            List<GrantedAuthority> authorities) {
+        return new User(user.getLogin(), user.getPassword(),
+                true, true,
+                true, true, authorities);
+        // todo later add enable
+    }
 }

@@ -1,5 +1,9 @@
 package org.ksusha.entities;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable,PasswordEncoder{
 
     public User(){
 
@@ -66,7 +70,8 @@ public class User implements Serializable{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+
+        this.password = encode(password);
     }
 
     public User_Info getUser_info() {
@@ -93,5 +98,20 @@ public class User implements Serializable{
                 ", password='" + password + '\'' +
                // ", roles=" + getRoles() +
                 '}';
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(String password) {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public String encode(CharSequence charSequence) {
+        return null;
+    }
+
+    @Override
+    public boolean matches(CharSequence charSequence, String s) {
+        return false;
     }
 }

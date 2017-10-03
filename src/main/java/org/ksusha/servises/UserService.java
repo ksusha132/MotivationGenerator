@@ -11,5 +11,7 @@ public interface UserService {
     User getUserByLoginLike(String login);
 
     User getUserById(Long id);
+
+    void registerUser(User user);
 }
 

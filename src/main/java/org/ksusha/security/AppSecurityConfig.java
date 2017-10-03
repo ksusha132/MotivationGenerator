@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -30,13 +30,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/user/find/all").access("hasAnyRole('USER','ADMIN')")
-                .antMatchers("/user/find/**").access("hasRole('ADMIN')")
-                .and().formLogin().defaultSuccessUrl("/user/find/all", false);
-
+                .antMatchers("/user/find/all").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+                .antMatchers("/logout").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+                .antMatchers("/user/find/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/register/**").permitAll()
+                .and().formLogin().defaultSuccessUrl("/user/find/all", false)
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true).permitAll();
     }
-
-    //todo hash passwords
-    //todo roles names
-    //
 }
