@@ -37,15 +37,6 @@ public class RegisterController {
     }
 
 
-    /*@RequestMapping(value = "/logout", method = RequestMethod.GET)
-    @ResponseBody
-    public String logoutPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            customLogoutSuccessHandler.onLogoutSuccess(request, response, auth);
-        }
-        return "OK";
-    }*/
     //todo fix problem with register user csrf token
     //todo fix problem with logout
 
